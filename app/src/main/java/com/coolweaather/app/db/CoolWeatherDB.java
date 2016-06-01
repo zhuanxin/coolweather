@@ -77,11 +77,10 @@ public class CoolWeatherDB {
      */
     public List<ProvinceBean> getAllProvinces() {
         List<ProvinceBean> list = new ArrayList<>();
-        ProvinceBean provinceBean;
         Cursor query = mDatabase.query(TABLE_NAME_PROVINCE, null, null, null, null, null, null);
         if (query != null && query.moveToFirst()) {
             do {
-                provinceBean = new ProvinceBean();
+                ProvinceBean provinceBean = new ProvinceBean();
                 provinceBean.setId(query.getInt(query.getColumnIndex("id")));
                 provinceBean.setProvinceCode(query.getString(query.getColumnIndex("province_code")));
                 provinceBean.setProvinceName(query.getString(query.getColumnIndex("province_name")));

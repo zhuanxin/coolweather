@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -68,6 +69,7 @@ public class ChooseAreaActivity extends Activity {
         listView = (ListView) findViewById(R.id.List_view);
         coolWeatherDB = CoolWeatherDB.getInstance(this);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -159,6 +161,7 @@ public class ChooseAreaActivity extends Activity {
                     result = Utility.handleCountriesResponse(coolWeatherDB,
                             response, selectedCity.getId());
                 }
+                Log.d("+++++++++++++++++++", response);
                 if (result) {
                     // 通过runOnUiThread()方法回到主线程处理逻辑
                     runOnUiThread(new Runnable() {
@@ -170,7 +173,7 @@ public class ChooseAreaActivity extends Activity {
                                 queryProvinces();
                             } else if ("city".equals(type)) {
                                 queryCities();
-                            } else if ("county".equals(type)) {
+                            } else if ("country".equals(type)) {
                                 queryCounties();
                             }
                         }
@@ -194,6 +197,12 @@ public class ChooseAreaActivity extends Activity {
     }
 
     private void closeProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("正在加载中...");
@@ -202,15 +211,9 @@ public class ChooseAreaActivity extends Activity {
         progressDialog.show();
     }
 
-    private void showProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         if (currentLevel == LEVEL_COUNTY) {
             queryCities();
         } else if (currentLevel == LEVEL_CITY) {

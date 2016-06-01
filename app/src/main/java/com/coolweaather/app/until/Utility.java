@@ -42,7 +42,7 @@ public class Utility {
                 for (String p : allCities) {
                     String[] array = p.split("\\|");
                     CityBean city = new CityBean();
-                    city.setCityName(array[0]);
+                    city.setCityCode(array[0]);
                     city.setCityName(array[1]);
                     city.setProvinceId(provinceId);
                     coolWeatherDB.saveCity(city);

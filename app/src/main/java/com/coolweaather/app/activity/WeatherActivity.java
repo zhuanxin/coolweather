@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coolweaather.app.R;
+import com.coolweaather.app.service.AutoUpdateService;
 import com.coolweaather.app.until.HttpCallbackListener;
 import com.coolweaather.app.until.HttpUtils;
 import com.coolweaather.app.until.Utility;
@@ -66,7 +67,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText = (TextView) findViewById(R.id.current_date);
         switchCity = (Button) findViewById(R.id.switch_city);
         refreshWeather = (Button) findViewById(R.id.refresh_weather);
-        weatherDesp= (TextView) findViewById(R.id.weather_desp);
+        weatherDesp = (TextView) findViewById(R.id.weather_desp);
         String countyCode = getIntent().getStringExtra("country_code");
         if (!TextUtils.isEmpty(countyCode)) {
             // 有县级代号时就去查询天气
@@ -117,6 +118,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+        startService(new Intent(this, AutoUpdateService.class));
     }
 
     /**

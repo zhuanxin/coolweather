@@ -91,7 +91,7 @@ public class ChooseAreaActivity extends Activity {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String countryCode = countyList.get(position).getCountryCode();
-//                    mPreferences.edit().putBoolean("citySelected", true);
+                    mPreferences.edit().putBoolean("citySelected", true).commit();
                     Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
                     intent.putExtra("country_code", countryCode);
                     startActivity(intent);
